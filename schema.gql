@@ -3,14 +3,31 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Mutation {
+  addPost(post: String!, userId: String!): Post!
+  addReact(postId: String!, userId: String!): React!
+  addUser(age: String!, email: String!, fullName: String!, password: String!): User!
+}
+
+type Post {
+  id: String!
+  post: String!
+}
+
 type Query {
   getAllUsers: [User!]!
+}
+
+type React {
+  id: String!
 }
 
 type User {
   age: Float!
   email: String!
   fullName: String!
+  getPosts: [Post!]
+  getPostsLength: Float
   id: String!
   password: String!
 }

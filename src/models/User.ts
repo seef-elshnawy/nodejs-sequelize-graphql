@@ -9,6 +9,7 @@ import {
 } from "sequelize-typescript";
 import { Field, ObjectType } from "type-graphql";
 import { Post } from "./posts";
+import { React } from "./React";
 
 @ObjectType()
 @Table({ tableName: "UserTest" })
@@ -43,4 +44,7 @@ export class User extends Model {
 
   @HasMany(() => Post, "id")
   post?: Post[];
+
+  @HasMany(()=>React,'userId')
+  reacts:React[]
 }

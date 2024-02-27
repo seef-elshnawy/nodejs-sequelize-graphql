@@ -8,7 +8,9 @@ import {
   BelongsTo,
   Table,
   PrimaryKey,
+  HasMany,
 } from "sequelize-typescript";
+import { React } from "./React";
 
 @Table({ tableName: "PostTest" })
 @ObjectType()
@@ -33,4 +35,7 @@ export class Post extends Model {
 
   @BelongsTo(() => User, "id")
   user?: User;
+
+  @HasMany(() => React, "postId")
+  reacts: React[];
 }

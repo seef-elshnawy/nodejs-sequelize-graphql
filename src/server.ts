@@ -8,6 +8,9 @@ import { UserResolver } from "./resolver/user.resolver";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import { User } from "./models/User";
 import { Post } from "./models/posts";
+import { PostsReslver } from "./resolver/post.resolver";
+import { postDataLoader } from "./dataloader/posts.dataloader";
+import { React } from "./models/React";
 const port = 8080;
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/config/config.json")[env];
@@ -17,13 +20,12 @@ export const sequelize = new Sequelize(
   config.password,
   {
     ...config,
-    models: [User, Post],
+    models: [User, Post, React],
   }
 );
-sequelize.sync();
 export const graphqlServer = async () => {
   const schema = await buildSchema({
-    resolvers: [UserResolver],
+    resolvers: [UserResolver, PostsReslver],
     emitSchemaFile: true,
   });
   sequelize.sync({ force: false, alter: true }).then((req) => {
@@ -35,9 +37,11 @@ export const graphqlServer = async () => {
   const server = new ApolloServer({
     schema,
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground],
+    // context: () => ({
+    //   dataloader: userDataLoader(),
+    // }),
   });
   await server.start();
-  //@ts-expect-error
   server.applyMiddleware({ app });
 };
 graphqlServer();
