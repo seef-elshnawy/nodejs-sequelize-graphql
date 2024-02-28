@@ -3,6 +3,11 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
 type Mutation {
   addPost(post: String!, userId: String!): Post!
   addReact(postId: String!, userId: String!): React!
@@ -19,7 +24,20 @@ type Query {
 }
 
 type React {
+  createdAt: DateTime!
   id: String!
+  postId: String!
+  userId: String!
+}
+
+type ReactsDate {
+  Friday: values!
+  Monday: values!
+  Saturday: values!
+  Sunday: values!
+  Thursday: values!
+  Tuesday: values!
+  Wednesday: values!
 }
 
 type User {
@@ -28,6 +46,13 @@ type User {
   fullName: String!
   getPosts: [Post!]
   getPostsLength: Float
+  getUserReact: ReactsDate
+  getUserScore: Float
   id: String!
   password: String!
+}
+
+type values {
+  posts: Float!
+  reacts: Float!
 }

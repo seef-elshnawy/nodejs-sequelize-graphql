@@ -23,18 +23,21 @@ export class React extends Model {
   @Field()
   id: string;
 
+  @Field()
   @ForeignKey(() => User)
   @Column({
     type: DataType.UUID,
   })
   userId: string;
 
+  @Field()
   @ForeignKey(() => Post)
   @Column({
     type: DataType.UUID,
   })
   postId: string;
 
+  @Field()
   @CreatedAt
   createdAt: Date;
 

@@ -9,7 +9,7 @@ import {
   Root,
 } from "type-graphql";
 import { User } from "../models/User";
-import { UserTypes } from "../types";
+import { ReactsDate } from "../types";
 import { ReactInput, UserInput } from "../validators/user.input";
 import { Post } from "../models/posts";
 import { UserLoader } from "../interface/post.dataloader";
@@ -31,15 +31,24 @@ export class UserResolver {
   }
   @FieldResolver(() => [Post], { nullable: true })
   async getPosts(@Root() { id }: User) {
-    return new userService().getPostsByUser(id!);
+    return userService.getPostsByUser(id!);
   }
   @FieldResolver(() => Number, { nullable: true })
   async getPostsLength(@Root() { id }: User) {
-    const values = await new userService().getPostLength(id);
+    const values = await userService.getPostLength(id);
+    return values;
+  }
+  @FieldResolver(() => Number, { nullable: true })
+  async getUserScore(@Root() { id }: User) {
+    return await userService.getUserRate(id);
+  }
+  @FieldResolver(() => ReactsDate, { nullable: true })
+  async getUserReact(@Root() { id }: User) {
+    const values = await userService.getUserReact(id);
     return values;
   }
   @Mutation(() => React)
   async addReact(@Args() input: ReactInput) {
-    return new userService().addReact(input);
+    return userService.addReact(input);
   }
 }
