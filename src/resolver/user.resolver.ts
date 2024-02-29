@@ -15,6 +15,7 @@ import { Post } from "../models/posts";
 import { UserLoader } from "../interface/post.dataloader";
 import { userService } from "../service/user.service";
 import { React } from "../models/React";
+import GraphQLJSON from "graphql-type-json";
 
 @Resolver(User)
 export class UserResolver {
@@ -42,7 +43,7 @@ export class UserResolver {
   async getUserScore(@Root() { id }: User) {
     return await userService.getUserRate(id);
   }
-  @FieldResolver(() => ReactsDate, { nullable: true })
+  @FieldResolver(() => GraphQLJSON, { nullable: true })
   async getUserReact(@Root() { id }: User) {
     const values = await userService.getUserReact(id);
     return values;

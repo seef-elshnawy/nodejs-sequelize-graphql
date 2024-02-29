@@ -37,10 +37,6 @@ export class React extends Model {
   })
   postId: string;
 
-  @Field()
-  @CreatedAt
-  createdAt: Date;
-
   @HasOne(() => User, "postId")
   user: User;
 
